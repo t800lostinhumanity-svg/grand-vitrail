@@ -1,0 +1,39 @@
+name: "Fabriquer l'IPA"
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  ipa:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Créer le projet Xcode
+        run: |
+          brew install xcodegen
+          xcodegen generate
+
+      - name: Compiler pour iPhone
+        run: |
+          xcodebuild -project GrandVitrail.xcodeproj -target GrandVitrail -configuration Release -sdk iphoneos \
+            SYMROOT="$PWD/sortie" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build
+
+      - name: Emballer le fichier IPA
+        run: |
+          APP=sortie/Release-iphoneos/GrandVitrail.app
+          test -f "$APP/www/index.html"
+          lipo -info "$APP/GrandVitrail"
+          plutil -p "$APP/Info.plist"
+          mkdir Payload
+          cp -R "$APP" Payload/
+          zip -qry GrandVitrail.ipa Payload
+          ls -l GrandVitrail.ipa
+
+      - uses: actions/upload-artifact@v5
+        with:
+          name: GrandVitrail-ipa
+          path: GrandVitrail.ipa
+          if-no-files-found: error

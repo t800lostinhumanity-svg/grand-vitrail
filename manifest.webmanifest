@@ -1,0 +1,20 @@
+{
+  "id": "./index.html",
+  "name": "Le Grand Vitrail",
+  "short_name": "Grand Vitrail",
+  "description": "Jeu de stratégie hors ligne : ton téléphone garde un éclat d'un monde brisé. Rencontre tes amis pour relier vos royaumes.",
+  "lang": "fr",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#100d18",
+  "theme_color": "#100d18",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
